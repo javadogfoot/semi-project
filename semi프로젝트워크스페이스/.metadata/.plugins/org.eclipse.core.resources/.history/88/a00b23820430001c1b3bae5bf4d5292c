@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+a { text-decoration:none } 
+
+h3{
+	text-align: center;
+}
+table{
+	border: 0px;
+	margin: 0px auto;
+}
+</style>
+</head>
+<%
+String q_sub=request.getParameter("q_sub");
+String q_ref=request.getParameter("q_ref");
+String q_lev=request.getParameter("q_lev");
+String q_sunbun=request.getParameter("q_sunbun");
+int q_idx=Integer.parseInt(request.getParameter("q_idx"));
+%>
+<body>
+<%@include file="/header.jsp" %>
+<section>
+	<article>
+		<h3>답 변 하 기</h3>
+		<form name="qnaReWrite.jsp" action="qnaReWrite_ok.jsp">
+      	<input type="hidden" name="q_ref" value="<%=q_ref %>">
+     	<input type="hidden" name="q_lev" value="<%=q_lev %>">
+        <input type="hidden" name="q_sunbun" value="<%=q_sunbun %>">
+        <input type="hidden" name="q_idx" value="<%=q_idx %>">
+		<table>
+			<tr>
+				<th>질문</th>
+				<td><input type="text" name="q_sub" size="48" value="답변:<%=q_sub%>"></td>
+			</tr>
+			<tr>
+				<th style= "vertical-align: text-top">본문</th>
+				<td><textarea rows="10" cols="50" name="q_con"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+				<input type="submit" value="작성하기">
+				<input type="reset" value="다시작성">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</article>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.sell.*" %>
+<jsp:useBean id="sdao" class="tomato.sell.SellDAO"></jsp:useBean>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+h3{
+   text-align: center;
+}
+li {
+   list-style-type: none;
+}
+h4 {
+   text-align: center;
+   margin: 0px auto;
+}
+aside { 
+	width:200px; 
+	float:left;
+}
+fieldset{
+	margin: 0px auto;
+	width: 700px;
+	text-align: center;
+}
+</style>
+<script>
+function showListAll(){
+	location.href='buyListAll_admin.jsp';
+}
+</script>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<section>
+      <h3>[상 품 판 매 글 조 회]</h3>
+</section>
+<aside>
+	<section>   
+         <ul id="listsix">
+         <li><label><a href="memberList_admin.jsp">회원목록</a></label></li>
+         <li><label><a href="buyList_admin.jsp">상품목록</a></label></li>
+         <li><label><a href="lessonList_admin.jsp">레슨목록</a></label></li>
+         <li><label><a href="communityList_admin.jsp">커뮤니티목록</a></label></li>
+         <li><label><a href="qnaList_admin.jsp">큐엔에이목록</a></label></li>
+         </ul>
+	</section>
+</aside>
+<section>
+	<form name="keywordFind" method="post">
+	<fieldset>
+		<input type="text" name="keyword" placeholder="키워드를 입력해주세요" size="50">
+		<input type="submit" value="검색">
+		<input type="button" name="listAll" value="모두보기" onclick="showListAll()">
+	</fieldset>
+	</form>
+</section>
+<section>
+	<hr>
+		<%
+		if(request.getMethod().equals("GET")){
+			%>
+</section>
+       <article>
+         <table>
+			<thead>
+				<tr>
+					<th>글번호</th>
+					<th>상품이름</th>
+					<th>상품가격</th>
+					<th>카테고리</th>
+					<th>상품설명</th>
+				</tr>
+			</thead>
+			<tbody>
+      		<%
+      		ArrayList<SellDTO> arr=sdao.buyList();
+      		if(arr==null||arr.size()==0){
+      			%>
+      			<tr>
+      				<td colspan="5" align="center">
+      				등록된 상품판매글이 없습니다.
+      				</td>
+      			</tr>
+      			<%
+      		}else {
+      			for(int i=0;i<arr.size();i++){
+      				%>
+      				<tr>
+	     				<td><%=arr.get(i).getS_idx() %></td> 				
+	     				<td><a href="/tomato/buy/buyContent.jsp?s_idx=<%=arr.get(i).getS_idx() %>"><%=arr.get(i).getS_name() %></a></td> 				
+	     				<td><%=arr.get(i).getS_price() %></td> 				
+	     				<td><%=arr.get(i).getS_cate() %></td> 				
+	     				<td><%=arr.get(i).getS_con() %></td> 				
+     				</tr>
+      				<%
+      			}
+      		}
+      		%>
+      	  </tbody>
+		  </table>
+  	   </article>
+			<%
+		}else {
+			%>
+			<jsp:include page="qnaKeywordFind_ok.jsp"></jsp:include>
+			<%
+		}
+		%>
+
+<%@include file="/footer.jsp" %>
+</body>
+</html>

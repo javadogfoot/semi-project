@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
+<%@ page import="tomato.member.*" %>
+<%@ page import="java.util.*" %>
+<jsp:useBean id="mdao" class="tomato.member.MemberDAO"></jsp:useBean>
+<%
+request.setCharacterEncoding("utf-8");
+String fkey=request.getParameter("fkey");
+String fvalue=request.getParameter("fvalue");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+h3{
+	text-align: center;
+}
+fieldset{
+	width: 550px;
+	margin: 0px auto;
+}
+table{
+	margin:0px auto;
+}
+li {
+	list-style-type: none;
+}
+h4 {
+	text-align: center;
+	margin: 0px auto;
+}
+aside { 
+ 
+  width:100px; 
+  float:left;
+}
+</style>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+
+<section>
+	<article>
+		<h3>관리자 페이지</h3>
+		<h4>[회원 목록]</h4>
+		<hr>
+	
+	</article>
+</section>
+	<aside>
+		<section>
+		
+			<ul id="listsix">
+			<li><label><a href="admin.jsp">회원목록</a></label></li>
+			<li><label><a href="byList_admin.jsp">상품목록</a></label></li>
+			<li><label><a href="lessonList_admin.jsp">클래스목록</a></label></li>
+			<li><label><a href="repleList_admin.jsp">댓글목록</a></label></li>
+			<li><label><a href="communityList_admin.jsp">커뮤니티목록</a></label></li>
+			<li><label><a href="qnaList_admin.jsp">큐엔에이목록</a></label></li>
+			</ul>
+		</section>
+	</aside>
+		
+		<form name="memberFind" method="post">
+		<fieldset>
+		<table>
+		<tr>
+			<td>
+			<select name="fkey">
+			<option value="curmem">현재 회원</option>
+			<option value="delmem">탈퇴 회원</option>
+			</select>
+			</td>
+		
+			<td>
+			<input type="text" name="fvalue" placeholder="이름을 검색하세요">
+			</td>
+			<td>
+			<input type="submit" value="검색">
+			</td>
+		</tr>
+		</table>
+		</fieldset>
+		</form>
+	
+		 <article>
+		 
+      <%
+	ArrayList<MemberDTO> arr=mdao.MemberFind(fvalue);
+      
+    	  if(request.getMethod().equals("GET")){
+          %>
+          <jsp:include page="memberListAll.jsp"></jsp:include>
+      <%
+	
+    	  }else if(request.getMethod().equals("POST")){
+          %>
+           <jsp:include page="memberFind_ok.jsp"></jsp:include>
+      <%
+      
+	}else{
+		for(int i=0;i<arr.size();i++){
+			%>
+			<tr>
+				<td><%=arr.get(i).getM_idx()%></td>
+				<td><%=arr.get(i).getM_id() %></td>
+				<td><%=arr.get(i).getM_name() %></td>
+				<td><%=arr.get(i).getM_addr() %></td>
+				<td><%=arr.get(i).getM_email() %></td>
+				<td><%=arr.get(i).getM_tel() %></td>
+				<td><%=arr.get(i).getM_birth() %></td>
+				<td><%=arr.get(i).getM_joindate() %></td>
+			</tr>
+			<% 
+		}	
+	
+	}
+	%>
+     
+      
+   </article>
+
+
+<%@include file="/footer.jsp" %>
+</body>
+</html>

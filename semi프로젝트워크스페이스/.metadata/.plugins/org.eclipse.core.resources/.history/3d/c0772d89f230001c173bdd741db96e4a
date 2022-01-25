@@ -1,0 +1,233 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tomato</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+body {
+    position: relative;
+   background: #f5f4f0;
+    font-weight: 400;
+    min-height: 100%;
+}
+section, article, aside, footer, header, nav, hgroup {
+    display: block;
+}
+
+div {
+    display: block;
+}
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    line-height: 1.5;
+}
+h6{
+   font-size: 25px;
+   font-color: wine;
+   font-weight: normal;
+   text-align: center;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+#home-main-section-top {
+    margin-top: 0px auto;
+    padding-top: 0px auto;	
+    background-color: #FBF7F2;
+}
+
+#home-main-section-top .home-main-title {
+    font-size: 3.0rem;
+    line-height: 1.3;
+    margin-bottom: 3.2rem;
+    letter-spacing: -0.4px;
+}
+#home-main-section-mid {
+    margin-top: 0px auto;
+    padding-top: 0px auto;
+    background-color: white;
+}
+
+#home-main-section-mid .home-main-title {
+    font-size: 3.0rem;
+    line-height: 1.3;
+    margin-bottom: 3.2rem;
+    letter-spacing: -0.4px;
+}
+
+#home-main-section-foot {
+    margin-top: 0px auto;
+    padding-top: 0px auto;
+    background-color: #EFFBEF;
+}
+
+#home-main-section-foot .home-main-title {
+    font-size: 3.0rem;
+    line-height: 1.3;
+    margin-bottom: 3.2rem;
+    letter-spacing: -0.4px;
+}
+
+#joinbtn1{
+   background-color: #FFF56E;
+   color: brown;
+   font-weight: bold;
+   height:50px;
+   border: 0px solid ;
+   margin:2px;
+}
+
+#joinbtn1:hover{
+   background: #FFC81E;
+   color: #FFF56E;
+   font-weight: bold;
+   height:50px;
+   border: none;
+   margin:2px;
+}
+
+#joinbtn2{
+   background-color: 	#F4B4B4 ;
+   color: brown;
+   font-weight: bold;
+   height:50px;
+   border: 0px solid ;
+   margin:2px;
+}
+
+#joinbtn2:hover{
+   background: #FF9696;
+   color: 	#F4B4B4;
+   font-weight: bold;
+   height:50px;
+   border: none;
+   margin:2px;
+}
+
+</style>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<section id="home-main-section-top">
+   <div id="home-main-top">
+      <div>
+         <table style="margin: 0px auto; text-align: right;">
+         <tr>
+            <td>
+               <h1 class="home-main-title">
+               동네생활 마스터 공간
+               <br></h1>
+              
+               <h6>[Nice To Ma To!]</h6>
+               <a href="/tomato/sell/sell.jsp"><input id="joinbtn1" type="button" value="팔러가기"></a>
+            </td>
+            <td>
+               <img src="img/과일거래.jpg" alt="메인 상단 이미지1" width="450" height="300">
+            </td>
+         </tr>
+         </table>
+      </div>
+   </div>
+</section>
+
+<section id="home-main-section-mid">
+   <div id="home-main-mid">
+      <div>
+         <table style="margin: 0px auto; text-align: left;">
+         <tr>
+            <td>
+               <img src="img/쇼핑.jpg" alt="메인 상단 이미지2" width="450" height="300">
+            </td>
+            <td>
+               <h1 class="home-main-title">
+               동네마켓 구경하기
+               </h1>
+               <br>
+                <a href="/tomato/buy/buyList.jsp?col=s_idx&range=desc"><input id="joinbtn2" type="button" value="사러가기"></a>
+            </td>
+         </tr>
+         </table>
+      </div>
+   </div>
+</section>
+
+<section id="home-main-section-foot">
+   <div id="home-main-foot">
+      <div>
+         <table style="margin: 0px auto; text-align: right;">
+         <tr>
+            <td>
+               <h1 class="home-main-title">
+              동네수업 듣기
+               </h1>
+               <div>
+               <a href="/tomato/lesson/lessonList.jsp"><input id="joinbtn1" type="button" value="배우러가기"></a>
+            	</div>
+            </td>
+            <td>
+               <img src="img/레슨.jpg" alt="메인 상단 이미지3" width="450" height="300">
+            </td>
+         </tr>
+         </table>
+      </div>
+   </div>
+</section>
+
+<section id="home-main-section-mid">
+   <div id="home-main-mid">
+      <div>
+         <table style="margin: 0px auto; text-align: left;">
+         <tr>
+            <td>
+               <img src="img/동네친구.jpeg" alt="메인 상단 이미지2" width="450" height="300">
+            </td>
+            <td>
+               <h1 class="home-main-title">
+               동네친구 만들기 
+               <br>
+               </h1>
+               <a href="/tomato/community/community.jsp"><input id="joinbtn2" type="button" value="소통하러가기"></a>
+            </td>
+         </tr>
+         </table>
+      </div>
+   </div>
+</section>
+
+<section id="home-main-section-top">
+   <div id="home-main-top">
+      <div>
+         <table style="margin: 0px auto; text-align: right;">
+         <tr>
+            <td>
+               <h1 class="home-main-title">
+               토마토 질문하기
+              	</h1>
+              	<div>
+               <a href="/tomato/qna/qnaList.jsp"><input id="joinbtn1" type="button" value="물어보러가기"></a>
+            	</div>
+            </td>
+            <td>
+               <img src="img/동네.jpg" alt="메인 상단 이미지2" width="450" height="300">
+            </td>
+         </tr>
+         </table>
+      </div>
+   </div>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

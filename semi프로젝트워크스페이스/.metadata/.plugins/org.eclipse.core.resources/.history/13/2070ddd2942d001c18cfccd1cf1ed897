@@ -1,0 +1,84 @@
+package tomato.buy;
+
+import java.sql.*;
+import java.util.*;
+import javax.naming.*;
+import javax.sql.*;
+
+public class BuyDAO {
+
+	private Connection conn;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	public BuyDAO() {
+		
+	}
+	public int buyItem(int s_idx, int m_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="insert into tomato_buy values(?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, s_idx);
+			ps.setInt(2, m_idx);
+			int result=ps.executeUpdate();
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	/**찜하기 유무 관련 메서드*/
+	public int getbuyY_N(int s_idx, int m_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="select count(*) from tomato_buy where s_idx=? and m_idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, s_idx);
+			ps.setInt(2, m_idx);
+			rs=ps.executeQuery();
+			rs.next();
+			int result=rs.getInt(1);
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	public int deleteBuyItem(int s_idx, int m_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="delete from tomato_buy where s_idx=? and m_idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, s_idx);
+			ps.setInt(2, m_idx);
+			int result=ps.executeUpdate();
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+}

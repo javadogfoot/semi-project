@@ -1,0 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<jsp:useBean id="lrdto" class="tomato.lesson_re.LessonReDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="lrdto"/>
+<jsp:useBean id="lrdao" class="tomato.lesson_re.LessonReDAO" scope="session"></jsp:useBean>
+<%
+	int result=lrdao.lessonReReWrite(lrdto);
+	String msg=result>0?"대댓글 등록 완료":"대댓글 등록 실패";
+%>
+<script>
+	window.alert('<%=msg%>');
+	location href='lessonContent.jsp?l_idx=<%=lrdto.getL_idx()%>';
+</script>

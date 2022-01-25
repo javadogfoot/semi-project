@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="tomato.member.MemberDTO"/>
+    <fullyQualifiedTypeName name="tomato.qna.QnaDTO"/>
+    <fullyQualifiedTypeName name="tomato.community.CommunityDTO"/>
+    <fullyQualifiedTypeName name="tomato.sell.SellDTO"/>
+    <fullyQualifiedTypeName name="tomato.db.TomatoDB"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="tomato.lesson.LessonDTO"/>
+</qualifiedTypeNameHistroy>

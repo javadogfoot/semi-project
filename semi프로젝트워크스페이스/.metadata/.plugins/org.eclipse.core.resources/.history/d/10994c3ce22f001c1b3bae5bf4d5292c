@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout2.css">
+
+</head>
+<body>
+<input type="button" value="버튼1" >
+<input type="button" value="버튼2" >
+<input type="button" value="버튼3" >
+</body>
+</html>

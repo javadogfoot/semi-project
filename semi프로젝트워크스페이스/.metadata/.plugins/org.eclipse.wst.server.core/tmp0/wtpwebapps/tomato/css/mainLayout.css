@@ -1,0 +1,59 @@
+@charset "UTF-8";
+body{
+   background-color: #f5f4f0; 
+   margin: 5px auto;
+   width: 1200px;
+}
+header{
+   width: 1200px;
+   margin: 5px;
+}
+header div{
+   text-align: right;
+   font-size: 15px;
+}
+header div a{
+   color: black;
+   text-decoration: none;
+}
+header div a:hover{
+   color: black;
+   text-decoration: underline;
+}
+h1{
+   font-size: 45px;
+   color: tomato;
+   display: inline;
+}
+h1 a{
+   text-decoration: none;
+   color: tomato;
+}
+h2{
+   color: black;
+   display: inline;
+   font-size: 15px;
+}
+h2 a{
+   text-decoration: none;
+   color: black;
+}
+header nav li{
+   list-style-type: none;
+   display: inline;
+   color: black;
+   margin-left: 48px;
+}
+header input{
+   
+   height: 23px;
+}
+section{
+   width: 1200px;
+}
+footer{
+   width: 1200px;
+   clear: both;
+   margin: 5px;
+   text-align: center;
+}

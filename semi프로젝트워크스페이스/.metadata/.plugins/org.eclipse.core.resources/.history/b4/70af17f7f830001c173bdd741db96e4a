@@ -1,0 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tomato</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+.background-color1{
+	background-color: #FBF7F2;
+}
+.background-color2{
+	background-color: white
+}
+.background-color3{
+	background-color: #EFFBEF;
+}
+.textright{
+	text-align: right;
+}
+table {
+	width: 1200px;
+	margin: 0px auto;
+	border-collapse: collapse;
+}
+.joinbtn1{
+   background-color: #2F3272;
+   color: brown;
+   font-weight: bold;
+   height:50px;
+   border: 0px solid ;
+   margin:2px;
+   border-radius: 60px 60px 60px 60px;
+}
+.joinbtn1:hover{
+   background: #FFC81E;
+   color: #FFF56E;
+   font-weight: bold;
+   height:50px;
+   border: none;
+   margin:2px;
+}
+span {
+	font-size: 50px;
+	color: #FF8000;
+	font-weight: bold;
+}
+table img:hover{
+	width:500px;
+	height:350px;
+}
+</style>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<table>
+	<tr class="background-color1">
+		<td class="textright"><span>동네생활 마스터 공간</span><br><input type="button" value="판매하기" class="joinbtn1"></td>
+		<td><img src="img/과일거래.jpg" alt="메인 상단 이미지1" width="450" height="300"></td>
+	</tr>
+	<tr class="background-color2">
+		<td class="textright"><img src="img/동네.jpg" alt="메인 상단 이미지1" width="450" height="300"></td>
+		<td><span>동네마켓 구경하기</span></td>
+	</tr>
+	<tr class="background-color3">
+		<td class="textright"><span>동네수업 듣기</span></td>
+		<td><img src="img/동네친구.jpeg" alt="메인 상단 이미지1" width="450" height="300"></td>
+	</tr>
+	<tr class="background-color1">
+		<td class="textright"><img src="img/레슨.jpg" alt="메인 상단 이미지1" width="450" height="300"></td>
+		<td><span>동네친구 만들기</span></td>
+	</tr>
+	<tr class="background-color2">
+		<td class="textright"><span>토마토 질문하기</span></td>
+		<td><img src="img/쇼핑.jpg" alt="메인 상단 이미지1" width="450" height="300"></td>
+	</tr>
+</table>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.sell.*" %>
+<jsp:useBean id="sdao" class="tomato.sell.SellDAO"></jsp:useBean>
+<%
+request.setCharacterEncoding("utf-8");
+String keyword=request.getParameter("keyword");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<section>
+	<article>
+         <table>
+			<thead>
+				<tr>
+					<th>글번호</th>
+					<th>상품이름</th>
+					<th>상품가격</th>
+					<th>카테고리</th>
+					<th>상품설명</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%
+      		ArrayList<SellDTO> arr=sdao.keywordFind(keyword);
+      		if(arr==null||arr.size()==0){
+      			%>
+      			<tr>
+      				<td colspan="5" align="center">
+      				등록된 상품판매 글이 없습니다.
+      				</td>
+      			</tr>
+      			<%
+      		}else {
+      			for(int i=0;i<arr.size();i++){
+      				%>
+      				<tr>
+     					<td><%=arr.get(i).getS_idx() %></td> 				
+	     				<td><a href="/tomato/buy/buyContent.jsp?s_idx=<%=arr.get(i).getS_idx() %>"><%=arr.get(i).getS_name() %></a></td> 				
+	     				<td><%=arr.get(i).getS_price() %></td> 				
+	     				<td><%=arr.get(i).getS_cate() %></td> 				
+	     				<td><%=arr.get(i).getS_con().substring(0.10) %>...</td>				
+     				</tr>
+      				<%
+      			}
+      		}
+      		%>
+			</tbody>
+		</table>			
+	</article>
+</section>
+</body>
+</html>

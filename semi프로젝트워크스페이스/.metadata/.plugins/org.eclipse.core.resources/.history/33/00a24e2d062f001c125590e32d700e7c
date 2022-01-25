@@ -1,0 +1,239 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.lesson.*" %>
+<%@ page import="tomato.lesson_re.*" %>
+<jsp:useBean id="ldao" class="tomato.lesson.LessonDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="lrdao" class="tomato.lesson_re.LessonReDAO"></jsp:useBean>
+<%
+	String idx_s=request.getParameter("l_idx");
+	if(idx_s==null||idx_s.equals("")){
+		idx_s="0";
+	}
+	
+	int l_idx=Integer.parseInt(idx_s);
+	LessonDTO dto=ldao.lessonContent(l_idx);
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+h3{
+	text-align: center;
+	font-size: 40px;
+	color: dimgray;
+}
+article{
+	width: 750px;
+	margin: 0px auto;
+	padding:15px;
+}
+.joinbt{
+	text-align: right;
+	background-color: white;
+	color: tomato;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+.joinbt:hover{
+	background-color: tomato;
+	color: white;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+</style>
+<script>
+function reReWriteBox(){
+	if(document.getElementById(reWrite).style.display=="none"){
+		document.getElementById(reWrite).style.display=="block";
+	}else if(document.getElementById(reWrite).style.display="block"){
+		document.getElementById(reWrite).style.display="none";
+	}
+}
+</script>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<%
+
+int m_idx=ldao.selectMidx(m_id);
+
+if(dto.getM_idxcnt()==dto.getL_people()){  
+	ldao.lessonOk(1, dto.getL_idx());
+}else{
+	ldao.lessonOk(0, dto.getL_idx());
+}
+
+int reTotalCnt=lrdao.getReTotalCnt(l_idx);
+
+int listSize=5;
+int pageSize=5;
+String cp_s=request.getParameter("cp");
+if(cp_s==null||cp_s.equals("")){
+	cp_s="1";
+}
+int cp=Integer.parseInt(cp_s);
+
+int totalPage=(reTotalCnt/listSize)+1;
+if(reTotalCnt%listSize==0)totalPage--;
+
+int userGroup=cp/pageSize;
+if(cp%pageSize==0)userGroup--;
+%>
+<section>
+	<article>
+	<h3>레슨본문</h3>
+	<form name="lessonContent" action="lessonJoin_ok.jsp">
+		<span style="margin-left:50px;"><%=dto.getL_name() %></span>
+		<hr>
+			<table>
+				<tr>
+				<td align="left" style="word-break:break-all;">
+				<%if(dto.getL_con()!=null){ %>       <!-- 20자 이상 쓰게 유효성7 -->
+				<%=dto.getL_con().replaceAll("\n", "<br>") %>
+				<%} %>
+				</td>
+				</tr>
+			</table>
+		<hr>
+		<div style="text-align: right;">
+		<%
+		if(m_idx==dto.getM_idx()||m_idx==1){ //본문과 접속자가 일치 || 관리자가 접속
+		%>
+			<a href="lessonDel_ok.jsp?l_idx=<%=dto.getL_idx()%>&l_name=<%=dto.getL_name()%>"><span>삭제하기</span></a>
+			<a href="lessonUpdate.jsp?l_idx=<%=dto.getL_idx()%>"><span>수정하기</span></a>
+		<%	
+		}else{
+			%>
+			<input type="hidden" name="l_idx" value="<%=dto.getL_idx()%>">
+			<input type="hidden" name="lm_idx" value="<%=dto.getM_idx() %>">
+			<input type="hidden" name="m_idx" value="<%=m_idx%>">
+			<%if(dto.getL_lessonok()==1){ %>
+			<input type="button" value="신청인원마감" class="joinbt">
+			<%}else{ %>
+			<input type="submit" value="신청하기" class="joinbt"> <!-- 하나의 아이디로 같은 레슨 중복 신청은 안된다. 유효성  -->
+			<%} %>
+			<input type="button" value="신청취소" class="joinbt" onclick="location.href='lessonJoinCancle_ok.jsp?l_idx=<%=dto.getL_idx()%>&lm_idx=<%=dto.getM_idx()%>&m_idx=<%=m_idx %>'">
+		<%
+		}
+		%>
+		</div>
+		<hr>
+	</form>
+	</article>
+	<article>
+		<table>
+		<%
+		ArrayList<LessonReDTO> arr=lrdao.lessonReList(l_idx,cp,listSize);
+		if(arr==null||arr.size()==0){
+			%>
+			<tr>
+				<td>등록된 댓글이 없습니다.</td>
+			</tr>
+			<%
+		}else{
+			for(int i=0;i<arr.size();i++){
+			%>
+			<tr>
+				<td>
+					 <div>
+					    <span><%=arr.get(i).getM_name()%>(<%=arr.get(i).getM_id() %>)</span>&nbsp;&nbsp;
+					    <span><%=arr.get(i).getL_r_con() %></span>
+					    <span><%=arr.get(i).getL_r_joindate() %></span>
+					    <span><input type="button" value="답변" onclick="reReWriteBox();"></span>					    
+					    <%if(m_idx==arr.get(i).getM_idx()){%>
+						<span><a href="lessonReDel_ok.jsp?l_r_idx=<%=arr.get(i).getL_r_idx()%>&l_idx=<%=l_idx%>"><input type="button" value="삭제"></a></span>
+						<%}%>
+					    <div id="reReWrite"></div>
+					 </div>
+				</td>
+			</tr>
+			<%
+			}
+		}
+		%>
+		</table>
+		<div style="text-align:center;">
+		<%
+			if(userGroup!=0){ //이전 화살표
+		%>
+			<a href="lessonContent.jsp?l_idx=<%=l_idx %>&cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
+		<%
+			}
+		%>
+			<%
+			for(int k=userGroup*5+1;k<=userGroup*pageSize+pageSize;k++){
+			%>
+			&nbsp;&nbsp;<a href="lessonContent.jsp?l_idx=<%=l_idx %>&cp=<%=k%>"><%=k%></a>&nbsp;&nbsp;
+			<%	
+			if(k==totalPage){
+				break;
+				}
+			}
+			%>
+			<%
+			if(userGroup!=(totalPage/pageSize)-(totalPage%pageSize==0?1:0)){  //다음 화살표
+		%>
+			<a href="lessonContent.jsp?l_idx=<%=l_idx %>&cp=<%=(userGroup+1)*pageSize+1 %>">&gt;&gt;</a>
+		<%
+			}
+		%>	
+		</div>
+		<!-- 댓글 입력창 -->
+		<form name="lessonReWrite" action="lessonReWrite_ok.jsp">
+			<div style="text-align:center;">
+			댓글&nbsp;&nbsp;&nbsp;<input type="text" name="l_r_con" size="55">&nbsp;&nbsp;
+			<input type="hidden" name="l_idx" value="<%=l_idx%>">
+			<input type="hidden" name="m_idx" value="<%=m_idx%>">
+			<input type="submit" value="입력">
+			</div>
+		</form>
+	</article>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

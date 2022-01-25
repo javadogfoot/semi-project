@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.qna.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+h3{
+   text-align: center;
+}
+li {
+   list-style-type: none;
+}
+h4 {
+   text-align: center;
+   margin: 0px auto;
+}
+aside { 
+	width:200px; 
+	float:left;
+}
+fieldset{
+	margin: 0px auto;
+	width: 700px;
+	text-align: center;
+}
+</style>
+<script>
+
+</script>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<section>
+      <h3>관리자페이지</h3>
+</section>
+<aside>
+	<section>   
+         <ul id="listsix">
+         <li><label><a href="mypage_myinfo.jsp">내정보</a></label></li>
+         <li><label><a href="mypage_buy.jsp">내가 찜한상품</a></label></li>
+         <li><label><a href="mypage_lesson.jsp">내가 신청한 레슨</a></label></li>
+         <li><label><a href="mypage_community.jsp">내가 올린 커뮤니티 글</a></label></li>
+         <li><label><a href="mypage_qna.jsp">내가 올린 Q&A글</a></label></li>
+         </ul>
+	</section>
+</aside>
+<section>
+여기다가 내용 채우면 됨
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<jsp:useBean id="ldto" class="tomato.lesson.LessonDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="ldto"/>
+<jsp:useBean id="ldao" class="tomato.lesson.LessonDAO" scope="session"></jsp:useBean>
+<%
+request.setCharacterEncoding("UTF-8");
+	int result=ldao.lessonUpdate(ldto);
+	String msg=result>0?"레슨 수정 완료":"레슨 수정 실패";
+%>
+<script>
+window.alert('<%=msg%>');
+location.href='lessonContent.jsp?l_idx=<%=ldto.getL_idx()%>';
+</script>

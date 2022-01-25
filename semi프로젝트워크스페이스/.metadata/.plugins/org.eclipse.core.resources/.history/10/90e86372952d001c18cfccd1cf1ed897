@@ -1,0 +1,112 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
+<jsp:useBean id="sdto" class="tomato.sell.SellDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="sdto"/>
+<jsp:useBean id="sdao" class="tomato.sell.SellDAO"></jsp:useBean>
+<%
+int result=sdao.sellProduct(sdto);
+if(result<0){
+	%>
+	<script>
+	window.alert('제품 등록에 실패하였습니다.');
+	location.href='sell.jsp';
+	</script>	
+	<%
+}
+String id=request.getParameter("m_id");
+String path=id+"/"+result;
+sdao.setUserid(path);
+sdao.sellFolderExist();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<script>
+window.alert('제품이 등록되었습니다. 사진을 첨부해주세요.');
+</script>
+</head>
+<style>
+h3{
+	text-align: center;
+	font-size: 40px;
+	color: dimgray;
+}
+table{
+	width: 500px;
+	margin: 0px auto;
+	margin-bottom: 10px;
+}
+table td{
+	padding: 8px;
+}
+table th{
+	padding-right: 25px;
+	padding-bottom: 10px;
+	font-size: 18px;
+	text-align: right;
+}
+#sellBtn{
+	background-color: white;
+	color: tomato;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+#sellBtn:hover{
+	background-color: tomato;
+	color: white;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+</style>
+<body>
+<%@include file="/header.jsp" %>
+<section>
+	<article>
+	<h3>SELL</h3>
+		<form name="sellImg" action="sellImg_ok.jsp?path=<%=path %>&s_idx=<%=result %>" method="post" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<th><label>제품명</label></th>
+				<td><%=request.getParameter("s_name") %></td>
+			</tr>
+			<tr>
+				<th><label>가격</label></th>
+				<td><%=request.getParameter("s_price") %></td>
+			</tr>
+			<tr>
+				<th><label>품목</label></th>
+				<td><%=request.getParameter("s_cate") %></td>
+			</tr>
+			<tr>
+				<th><label>제품 설명</label></th>
+				<td></td>
+			</tr>
+			<tr>
+				<th><label>제품 사진</label></th>
+				<td>
+				<input type="file" name="upload" required="required" accept=".jpg, .jpeg, .JPG, .JPEG">
+				<h6 style="display:inline;">.jpg, .jpeg만 가능</h6>
+				</td>
+			</tr>
+		</table>
+		<div style="text-align:center;">
+				<input type="submit" value="등록하기" id="sellBtn">
+		</div>
+		</form>
+	</article>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

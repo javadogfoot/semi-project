@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.qna.*" %>
+<jsp:useBean id="cdao" class="tomato.community.CommunityDAO"></jsp:useBean>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+</head>
+<%
+int totalCnt = cdao.getTotalCnt(); //총 게시물 수
+int listSize = 5; //보여줄 리스트 수
+int pageSize = 5; //보여줄 페이지 수
+
+String cp_s=request.getParameter("cp");
+if(cp_s==null || cp_s.equals("")){
+   cp_s="1";
+}
+
+int cp = Integer.parseInt(cp_s); //핵심 사용자 위치
+
+int totalPage = (totalCnt/listSize)+1;
+if(totalCnt % listSize == 0)totalPage--;
+
+int userGroup = cp/pageSize;
+if(cp % pageSize == 0)userGroup--;
+%>
+<body>
+<article>
+<table>
+	<thead>
+		<tr>
+		<th>글번호</th>
+		<th>글제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+		</tr>
+	</thead>
+	<tbody>
+            <%
+            ArrayList<CommunityDTO> arr = cdao.community(cp,listSize);
+            if(arr==null||arr.size()==0){
+               %>
+               <tr>
+                  <td colspan="4" align="center">
+                  등록된 글이 없습니다.
+                  </td>
+               </tr>
+               <%
+            }else {
+               for(int i=0;i<arr.size();i++){
+                  %>
+                  <tr>
+                 <td><%=arr.get(i).getC_idx() %></td>             
+                 <td><%=arr.get(i).getC_sub() %></td>             
+                 <td><%=arr.get(i).getM_name() %></td>             
+                 <td><%=arr.get(i).getC_joindate() %></td>                         
+                 </tr>
+                  <%
+               }
+            }
+            %>
+	</tbody>
+</table>
+        <div style="text-align: center;">
+		   <%
+		   if(userGroup!=0){
+		      %>
+		      <a href="communityList_admin.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>">&lt;&lt;</a>
+		      <%
+		      }
+		      %>
+		      <%
+		      for(int i=userGroup*pageSize+1; i<=userGroup*pageSize+pageSize; i++){
+		      %>&nbsp;&nbsp;<a href="communityList_admin.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;<%
+		      if(i==totalPage){
+		         break;
+		      }
+		      }
+		      %>
+		      <%
+		      if(userGroup!=(totalPage/pageSize)-(totalPage%pageSize==0?1:0)){
+		      %>
+		      <a href="communityList_admin.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt;&gt;</a>
+		      <%
+		   }
+		   %>
+		</div>
+</article>
+</body>
+</html>

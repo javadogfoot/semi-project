@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
+<jsp:useBean id="ldto" class="tomato.lesson.LessonDTO"></jsp:useBean>
+<jsp:setProperty property="*" name="ldto"/>
+<jsp:useBean id="ldao" class="tomato.lesson.LessonDAO" scope="session"></jsp:useBean>
+<%
+	int result=ldao.lessonWrite(ldto);
+	String msg=result>0?"레슨 등록 성공":"레슨 등록 실패";
+%>
+<script>
+window.alert('<%=msg%>');
+location.href='lessonList.jsp';
+</script>

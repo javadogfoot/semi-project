@@ -1,0 +1,210 @@
+<%@page import="tomato.lesson.LessonDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="tomato.lesson_buy.*" %>
+
+<jsp:useBean id="ldao" class="tomato.lesson.LessonDAO"></jsp:useBean>
+<jsp:useBean id="mdao" class="tomato.member.MemberDAO"></jsp:useBean>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+#joinbtn1{
+   background-color: #f5f4f0;
+   color: tomato;
+   font-weight: bold;
+   height:23px;
+   border: none;
+   margin:2px;
+}
+#joinbtn1:hover{
+
+   background: #f5f4f0;
+   color: tomato;
+   font-weight: bold;
+   height:23px;
+   border: none;
+   margin:2px;
+}
+.dropdown-menu {
+   padding: 0 30px;
+   height: 100%;
+   font-size: 15px;
+   text-align: left;
+   color: #333333;
+   line-height: 50px;
+}
+
+.dropdown-menu>ul {
+   text-align: left;
+   padding-left: 0;
+}
+
+.menu1>ul {
+   list-style: none;
+ 
+   opacity: 0;
+   visibility: hidden;
+   display: block;
+   -webkit-transition: all 2s;
+   transition: all 2s;
+}
+
+.menu1:hover>ul {
+   visibility: visible;
+   opacity: 1;
+}
+
+.menu1 {
+   width: 100%;
+   height: 50px;
+   display: block;
+   overflow: hidden;
+   -webkit-transition: all 2s;
+   transition: all 1s;
+}
+
+.menu1:hover {
+   height: 200px;
+}
+
+.ul {
+   list-style: none;
+}
+
+.ul>.menu2 {
+   text-align: left;
+   font-size: 5px;
+}
+h3{
+   text-align: center;
+   font-size: 30px;
+   color: red;
+}
+li {
+   list-style-type: none;
+}
+aside { 
+   width:200px; 
+   float:left;
+}
+fieldset{
+   margin: 0px auto;
+   width: 700px;
+   text-align: center;
+}
+.table-wrapper {
+        background: #ffffff;
+      background: #f5f4f0;
+      margin: 0px auto;
+}
+.table-title {
+      background: #ffffcc;
+      color: #red;
+      margin: 0px auto;
+      border-radius: 3px 3px 0 0;
+}
+.table-title h2 {
+      font-size: 20px;
+      font-color: #e9e9e9;
+      margin: 0px auto;
+}
+table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+      padding: 12px 10px;
+      vertical-align: middle;
+      text-align:center;
+}
+table.table-striped.table-hover tbody tr:hover {
+      background: #f5f5f5
+}
+</style>
+<script>
+function changeForm(val) {
+    if (val == "0") {
+       location.href = '/tomato/member/memberUpdate.jsp';
+       
+    } else if(val =="1") {
+       location.href = '/tomato/member/memberDelete_ok.jsp';
+       
+    } else if(val == "2"){
+       location.href='/tomato/member/mypage_buy.jsp';
+       
+    } else if(val == "3"){
+       location.href='/tomato/member/mypage_qna.jsp';
+       
+    } else if(val =="4"){
+       location.href='/tomtato/member/mypage_mylesson.jsp';
+       
+    } else if(val =="5"){
+       location.href='/tomato/member/mypage_mylesson.jsp';
+ }
+    else if(val=="6"){
+       loaction.href='/tomato/member/mypage_lesson.jsp';
+    }
+}
+</script>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<%int m_idx=mdao.selectMidx(m_id); %>
+<section>
+      <h3>마이페이지</h3>
+</section>
+<aside>
+	<section>   
+         <ul id="listsix">
+         <li><label><a href="mypage_myinfo.jsp">내정보</a></label></li>
+         <li><label><a href="mypage_buy.jsp">내가 찜한상품</a></label></li>
+         <li><label><a href="mypage_mylesson.jsp">내가 신청한 레슨</a></label></li>
+         <li><label><a href="mypage_lesson.jsp">내가 신청한 레슨</a></label></li>
+         <li><label><a href="mypage_community.jsp">내가 올린 커뮤니티 글</a></label></li>
+         <li><label><a href="mypage_qna.jsp">내가 올린 Q&A글</a></label></li>
+         </ul>
+	</section>
+</aside>
+<section>
+       <article>
+         <table>
+			<thead>
+				<tr>
+					<th>레슨 번호</th>
+					<th>레슨 제목</th>
+					<th>레슨 작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+      		<%
+      		ArrayList<LessonDTO> arr =  ldao.myLesson(m_idx);
+      		if(arr==null||arr.size()==0){
+      			%>
+      			<tr>
+      				<td colspan="3" align="center">
+      				작성한 레슨이 없습니다.
+      				</td>
+      			</tr>
+      			<%
+      		}else {
+      			for(int i=0;i<arr.size();i++){
+      				%>
+      				<tr>
+	     				<td><%=arr.get(i).getL_idx() %></td> 				
+	     				<td><a href="/tomato/lesson/lessonContent.jsp?l_idx=<%=arr.get(i).getL_idx() %>"><%=arr.get(i).getL_name() %></a></td> 				
+	     				<td><%=arr.get(i).getL_joindate() %></td>
+     				</tr>
+      				<%
+      			}
+      		}
+      		%>
+      	  </tbody>
+		  </table>
+  	   </article>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>

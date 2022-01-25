@@ -1,0 +1,85 @@
+package tomato.lesson.buy;
+
+import java.sql.*;
+import java.util.*;
+
+public class LessonBuyDAO {
+
+	private Connection conn;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	public LessonBuyDAO() {
+		
+	}
+	
+	/**레슨 신청자 추가 메서드*/
+	public int lessonJoin(int l_idx,int m_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="insert into tomato_lesson_buy values(?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, l_idx);
+			ps.setInt(2, m_idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**레슨 신청자 취소 메서드*/
+	public int lessonJoinCancle(int l_idx,int m_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="delete from tomato_lesson_buy where l_idx=? and m_idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, l_idx);
+			ps.setInt(2, m_idx);
+			int count=ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	/**레슨 당 신청자 목록 메서드*/
+	public ArrayList<Integer> lessonJoinlist(int l_idx) {
+		try {
+			conn=tomato.db.TomatoDB.getConn();
+			String sql="select m_idx from tomato_lesson_buy where l_idx=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, l_idx);
+			rs=ps.executeQuery();
+			ArrayList<Integer> arr=new ArrayList<Integer>();
+			while(rs.next()) {
+				int m_idx=rs.getInt("m_idx");
+				arr.add(m_idx);
+			}
+			return arr;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			}catch(Exception e2) {}
+		}
+	}
+	
+	
+}

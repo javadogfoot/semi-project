@@ -1,0 +1,184 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="tomato.member.*" %>
+<jsp:useBean id="mdao" class="tomato.member.MemberDAO"></jsp:useBean>
+<%
+String id = (String) session.getAttribute("m_id");
+MemberDTO dto=mdao.memberView(id);
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/tomato/css/mainLayout.css">
+<style>
+body {
+		background: #f5f4f0;
+		font-family: 'Roboto';
+}
+.signup-form{
+		width: 390px;
+		margin: 0 auto;
+		padding: 30px 0;
+}
+.signup-form h3{
+		color: dimgray;
+		font-size: 40px;
+		margin: 0 0 15px;
+		text-align: center;
+   }
+.signup-form .lead {
+        font-size: 14px;
+		margin-bottom: 30px;
+		text-align: center;
+}
+.signup-form form {		
+		border-radius: 1px;
+    	margin-bottom: 15px;
+        background: #fff;
+		border: 1px solid #f3f3f3;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+}
+.signup-form .form-group {
+		margin-bottom: 20px;
+}
+.signup-form label {
+		font-size: 13px;
+		background-color: white;
+		color: tomato;
+		font-weight: bold;
+		height:23px;
+}
+.signup-form .form-control {
+		min-height: 38px;
+		box-shadow: none !important;
+		border-width: 0 0 1px 0;
+}	
+.signup-form .input-group-addon {
+		max-width: 42px;
+		text-align: center;
+		background: none;
+		border-width: 0 0 1px 0;
+		padding-left: 5px;
+}
+#joinbtn1{
+	background-color: white;
+	color: tomato;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+#joinbtn1:hover{
+	background-color: tomato;
+	color: white;
+	font-weight: bold;
+	height:23px;
+	border: none;
+	margin:2px;
+	border: 2px solid tomato;
+}
+</style>
+</head>
+<body>
+<%@include file="/header.jsp" %>
+<section>
+   <article>
+   <div class="signup-form">
+      <h3>Change my Info</h3>
+      <form name="memberUpdate" action="memberUpdate_ok.jsp">
+      <input type="hidden" name="id" value="<%=id%>">
+    <p class="lead">변경하실 내용을 수정해주세요!</p>
+	<div class="form-group">
+	<div class="input-group">
+	<br>
+          <div class="form-group">
+		  <div class="input-group">
+			<label>아이디</label>
+			<span class="input-group-addon"></span>
+            <input readonly="readonly" type="text" class="form-control" name="m_id" height="10" value="<%=dto.getM_id() %>" >
+          </div>
+		  </div>
+            <div class="form-group">
+		  	<div class="input-group">
+			<label>비밀번호</label>
+			<span class="input-group-addon"></span>
+             <input type="password" class="form-control" name="m_pwd" >
+             </div>
+		     </div>
+             <div class="form-group">
+		  	<div class="input-group">
+			<label>이름</label>
+			<span class="input-group-addon"></span>
+             <input readonly="readonly" type="text" class="form-control" name="m_name" value="<%=dto.getM_name() %>">
+             </div>
+		     </div>
+          
+             <div class="form-group">
+		  	<div class="input-group">
+			<label>주소</label>
+			<select name="m_addr">
+			<option value="" selected disabled hidden>==선택하세요==</option>
+			<option value="강남구">강남구</option>
+			<option value="강동구">강동구</option>
+			<option value="강북구">강북구</option>
+			<option value="강서구">강서구</option>
+			<option value="관악구">관악구</option>
+			<option value="광진구">광진구</option>
+			<option value="구로구">구로구</option>
+			<option value="금천구">금천구</option>
+			<option value="노원구">노원구</option>
+			<option value="도봉구">도봉구</option>
+			<option value="동대문구">동대문구</option>
+			<option value="동작구">동작구</option>
+			<option value="마포구">마포구</option>
+			<option value="서대문구">서대문구</option>
+			<option value="서초구">서초구</option>
+			<option value="성동구">성동구</option>
+			<option value="성북구">성북구</option>
+			<option value="송파구">송파구</option>
+			<option value="양천구">양천구</option>
+			<option value="영등포구">영등포구</option>
+			<option value="용산구">용산구</option>
+			<option value="은평구">은평구</option>
+			<option value="종로구">종로구</option>
+			<option value="중랑구">중랑구</option>
+					</select>
+				<span class="input-group-addon"></span>
+			</div>
+        </div>
+          
+            <div class="form-group">
+		  	<div class="input-group">
+			<label>이메일</label>
+			<span class="input-group-addon"></span>
+             <input type="text" class="form-control" name="m_email" value="<%=dto.getM_email() %>">
+             </div>
+		     </div>
+		     
+             <div class="form-group">
+		  	<div class="input-group">
+			<label>전화번호</label>
+			<span class="input-group-addon"></span>
+             <input type="text" class="form-control" name="m_tel" value="<%=dto.getM_tel()%>">
+             </div>
+		     </div>
+          <br>
+          <tr>
+             <td colspan="2" align="center">
+                <input type="submit" id="joinbtn1" value="수정하기">
+                <input type="reset" id="joinbtn1" value="다시작성">
+            </td>
+            </tr>
+              </div>
+              </div>
+    </form>
+    </div>
+ </article>
+</section>
+<%@include file="/footer.jsp" %>
+</body>
+</html>
